@@ -1,0 +1,141 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3.2rem;
+    background:
+            radial-gradient(circle at top, rgba(91, 141, 239, 0.18), transparent 32rem),
+            var(--gray-900);
+}
+
+.card {
+    width: 100%;
+    max-width: 42rem;
+    padding: 3.2rem;
+    border-radius: 1.6rem;
+    background: var(--gray-800);
+    box-shadow: 0 2.4rem 6rem rgba(0, 0, 0, 0.35);
+    border: 0.1rem solid rgba(255, 255, 255, 0.08);
+}
+
+.header {
+    margin-bottom: 2.4rem;
+    text-align: center;
+}
+
+.logo {
+    display: inline-block;
+    margin-bottom: 1.2rem;
+    font-size: 1.4rem;
+    letter-spacing: 0.16rem;
+    text-transform: uppercase;
+    color: var(--primary);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2.8rem;
+    color: var(--text-default);
+}
+
+.header p {
+    margin-top: 0.8rem;
+    font-size: 1.4rem;
+    color: var(--text-muted);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.field label {
+    font-size: 1.4rem;
+    color: var(--text-default);
+}
+
+.field input {
+    height: 4.8rem;
+    border: 0;
+    border-radius: 0.8rem;
+    padding: 0 1.4rem;
+    background: var(--gray-700);
+    color: var(--text-default);
+    outline: 0.2rem solid transparent;
+    transition: outline-color 0.2s ease;
+}
+
+.field input:focus {
+    outline-color: var(--primary);
+}
+
+.message {
+    padding: 1.2rem;
+    border-radius: 0.8rem;
+    background: rgba(91, 141, 239, 0.12);
+    color: var(--text-default);
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.submitButton {
+    height: 4.8rem;
+    border: 0;
+    border-radius: 0.8rem;
+    background: var(--primary);
+    color: var(--gray-900);
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+            filter 0.2s ease,
+            transform 0.2s ease;
+}
+
+.submitButton:hover {
+    filter: brightness(1.08);
+    transform: translateY(-0.1rem);
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.actions button {
+    border: 0;
+    background: transparent;
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 1.4rem;
+}
+
+.actions button:hover {
+    text-decoration: underline;
+}
+
+.fakeFlow {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    text-align: center;
+}
+
+.fakeFlow h2 {
+    margin: 0;
+    color: var(--text-default);
+}
+
+.fakeFlow p {
+    margin: 0;
+    color: var(--text-muted);
+}
