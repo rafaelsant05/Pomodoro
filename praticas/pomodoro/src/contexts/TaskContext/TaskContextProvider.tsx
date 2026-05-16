@@ -46,13 +46,26 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
   }, []);
 
   useEffect(() => {
-    worker.onmessage(e => {
+    worker.onmessage(async e => {
       const countDownSeconds = e.data;
       if (countDownSeconds <= 0) {
         if (playBeepRef.current) {
           playBeepRef.current();
           playBeepRef.current = null;
         }
+
+        if (state.activeTask) {
+          try {
+            await fetch(`${API_URL}/tasks/${state.activeTask.id}/complete`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ completeDate: Date.now() }),
+            });
+          } catch {
+            console.warn('Erro ao registrar conclusão na API');
+          }
+        }
+
         dispatch({ type: TaskActionTypes.COMPLETE_TASK });
         worker.terminate();
       } else {
@@ -62,7 +75,7 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
         });
       }
     });
-  }, [worker]);
+  }, [worker, state.activeTask]);
 
   useEffect(() => {
     localStorage.setItem('state', JSON.stringify(state));
