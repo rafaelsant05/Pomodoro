@@ -16,7 +16,10 @@ import type { TaskModel } from '../../models/TaskModel';
 
 export function History() {
   const { state, dispatch } = useTaskContext();
+<<<<<<< Updated upstream
   const [confirmClearHistory, setConfirmClearHistory] = useState(false);
+=======
+>>>>>>> Stashed changes
   const [apiTasks, setApiTasks] = useState<TaskModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -51,12 +54,15 @@ export function History() {
   }, []);
 
   useEffect(() => {
+<<<<<<< Updated upstream
     if (!confirmClearHistory) return;
     setConfirmClearHistory(false);
     dispatch({ type: TaskActionTypes.RESET_STATE });
   }, [confirmClearHistory, dispatch]);
 
   useEffect(() => {
+=======
+>>>>>>> Stashed changes
     return () => { showMessage.dismiss(); };
   }, []);
 
@@ -69,10 +75,19 @@ export function History() {
     });
   }
 
-  function handleResetHistory() {
+  async function handleResetHistory() {
     showMessage.dismiss();
-    showMessage.confirm('Tem certeza?', confirmation => {
-      setConfirmClearHistory(confirmation);
+    showMessage.confirm('Tem certeza?', async confirmation => {
+      if (!confirmation) return;
+      try {
+        await fetch(`${API_URL}/tasks`, { method: 'DELETE' });
+        setApiTasks([]);
+        setSortTaskOptions({ tasks: [], field: 'startDate', direction: 'desc' });
+        dispatch({ type: TaskActionTypes.RESET_STATE });
+        showMessage.success('Histórico apagado!');
+      } catch {
+        showMessage.error('Erro ao apagar histórico');
+      }
     });
   }
 
