@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="788a9e47-7d0e-48e7-ab8d-b4d7f1c042f4" name="Changes" comment="pagina login finalizada">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/praticas/pomodoro/src/pages/History/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/praticas/pomodoro/src/pages/History/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +42,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\rafae\\Pomodoro\\praticas\\pomodoro-api\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Users\\rafae\\Pomodoro\\praticas\\pomodoro\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
