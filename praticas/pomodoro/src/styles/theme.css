@@ -1,0 +1,78 @@
+:root {
+  /* Tons de Azul Escuro + Cinza Nardo */
+  --gray-100: #dde1e8;
+  --gray-200: #b8bfcc;
+  --gray-300: #8e97aa;
+  --gray-400: #4a5568;
+  --gray-500: #3a4257;
+  --gray-600: #2c3347;
+  --gray-700: #1e2538;
+  --gray-800: #131929;
+  --gray-900: #0b0f1c;
+
+  /* Primária — Azul */
+  --primary-light: #93c5fd;
+  --primary: #3b82f6;
+  --primary-dark: #1d4ed8;
+
+  /* Links */
+  --link-color: #60a5fa;
+  --link-hover: #3b82f6;
+
+  /* Alertas */
+  --success: #22c55e;
+  --warning: #eab308;
+  --error: #ef4444;
+  --info: #3b82f6;
+
+  /* Texto sobre fundos coloridos */
+  --text-over-primary: #0b0f1c;
+  --text-over-primary-dark: #dde1e8;
+  --text-over-primary-light: #0b0f1c;
+  --text-over-success: #0b0f1c;
+  --text-over-warning: #0b0f1c;
+  --text-over-error: #dde1e8;
+  --text-over-info: #0b0f1c;
+
+  /* Texto */
+  --text-default: #dde1e8;
+  --text-muted: #8e97aa;
+
+  /* Desativado */
+  --disabled: #4a5568;
+  --text-disabled: #8e97aa;
+
+  /* Toastify */
+  --toastify-color-light: var(--text-default);
+  --toastify-color-dark: var(--text-default);
+  --toastify-color-info: var(--info);
+  --toastify-color-success: var(--success);
+  --toastify-color-warning: var(--warning);
+  --toastify-color-error: var(--error);
+  --toastify-text-color-light: #0b0f1c;
+  --toastify-text-color-dark: #dde1e8;
+  --toastify-color-progress-light: var(--primary);
+  --toastify-color-progress-dark: var(--primary);
+}
+
+/* Modo Claro */
+:root[data-theme='light'] {
+  --gray-100: #0b0f1c;
+  --gray-200: #131929;
+  --gray-300: #1e2538;
+  --gray-400: #2c3347;
+  --gray-500: #3a4257;
+  --gray-600: #4a5568;
+  --gray-700: #8e97aa;
+  --gray-800: #b8bfcc;
+  --gray-900: #e8eaf0;
+
+  --text-default: #0b0f1c;
+  --text-muted: #2c3347;
+
+  --link-color: #1d4ed8;
+  --link-hover: #1e40af;
+
+  --toastify-text-color-light: #dde1e8;
+  --toastify-text-color-dark: #dde1e8;
+}
