@@ -139,3 +139,19 @@
     margin: 0;
     color: var(--text-muted);
 }
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 2.4rem;
+    margin-top: 1.6rem;
+}
+
+.links a {
+    font-size: 1.4rem;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}

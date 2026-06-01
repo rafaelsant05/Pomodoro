@@ -1,56 +1,45 @@
-import { Router } from 'express'
+import { Router, Response } from 'express'
 import { prisma } from '../lib/prisma'
+import { authMiddleware, AuthRequest } from '../middlewares/auth.middleware'
 
 export const tasksRouter = Router()
+tasksRouter.use(authMiddleware)
 
-tasksRouter.get('/', async (_req, res) => {
-    const tasks = await prisma.task.findMany({
-        orderBy: { startDate: 'desc' },
-    })
-    return res.json(tasks)
+tasksRouter.get('/', async (req: AuthRequest, res: Response) => {
+  const tasks = await prisma.task.findMany({
+    where: { userId: req.userId! },
+    orderBy: { startDate: 'desc' }
+  })
+  return res.json(tasks)
 })
 
-tasksRouter.post('/', async (req, res) => {
-    const { id, name, duration, type, startDate } = req.body as {
-        id: string
-        name: string
-        duration: number
-        type: string
-        startDate: number
-    }
-
-    const task = await prisma.task.create({
-        data: { id, name, duration, type, startDate: BigInt(startDate) },
-    })
-
-    return res.status(201).json(task)
+tasksRouter.post('/', async (req: AuthRequest, res: Response) => {
+  const { id, name, duration, type, startDate, completeDate, interruptDate } = req.body
+  const task = await prisma.task.create({
+    data: { id, name, duration, type, startDate, completeDate, interruptDate, userId: req.userId! }
+  })
+  return res.json(task)
 })
 
-tasksRouter.patch('/:id/complete', async (req, res) => {
-    const { id } = req.params
-    const { completeDate } = req.body as { completeDate: number }
+tasksRouter.patch('/:id', async (req: AuthRequest, res: Response) => {
+  const id = req.params['id'] as string
 
-    const task = await prisma.task.update({
-        where: { id },
-        data: { completeDate: BigInt(completeDate) },
-    })
+  const existing = await prisma.task.findFirst({ where: { id, userId: req.userId! } })
+  if (!existing) return res.status(404).json({ error: 'Tarefa não encontrada' })
 
-    return res.json(task)
+  const task = await prisma.task.update({
+    where: { id },
+    data: req.body
+  })
+  return res.json(task)
 })
 
-tasksRouter.patch('/:id/interrupt', async (req, res) => {
-    const { id } = req.params
-    const { interruptDate } = req.body as { interruptDate: number }
+tasksRouter.delete('/:id', async (req: AuthRequest, res: Response) => {
+  const id = req.params['id'] as string
 
-    const task = await prisma.task.update({
-        where: { id },
-        data: { interruptDate: BigInt(interruptDate) },
-    })
+  const existing = await prisma.task.findFirst({ where: { id, userId: req.userId! } })
+  if (!existing) return res.status(404).json({ error: 'Tarefa não encontrada' })
 
-    return res.json(task)
-})
-
-tasksRouter.delete('/', async (_req, res) => {
-    await prisma.task.deleteMany()
-    return res.status(204).send()
+  await prisma.task.delete({ where: { id } })
+  return res.status(204).send()
 })

@@ -14,6 +14,14 @@ import { showMessage } from '../../adapters/showMessage';
 import { API_URL } from '../../config/api';
 import type { TaskModel } from '../../models/TaskModel';
 
+function getAuthHeaders() {
+    const token = localStorage.getItem('pomodoro_token')
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }
+}
+
 export function History() {
     const { state, dispatch } = useTaskContext();
     const [apiTasks, setApiTasks] = useState<TaskModel[]>([]);
@@ -27,8 +35,7 @@ export function History() {
 
     useEffect(() => {
         document.title = 'Histórico - Chronos Pomodoro';
-        setIsLoading(true);
-        fetch(`${API_URL}/tasks`)
+        fetch(`${API_URL}/tasks`, { headers: getAuthHeaders() })
             .then(res => res.json())
             .then((data: TaskModel[]) => {
                 const tasks = data.map(t => ({
@@ -66,7 +73,7 @@ export function History() {
         showMessage.confirm('Tem certeza?', async confirmation => {
             if (!confirmation) return;
             try {
-                await fetch(`${API_URL}/tasks`, { method: 'DELETE' });
+                await fetch(`${API_URL}/tasks`, { method: 'DELETE', headers: getAuthHeaders() });
                 setApiTasks([]);
                 setSortTaskOptions({ tasks: [], field: 'startDate', direction: 'desc' });
                 dispatch({ type: TaskActionTypes.RESET_STATE });
@@ -83,21 +90,20 @@ export function History() {
         <MainTemplate>
             <Container>
                 <Heading>
-                    <span>History</span>
+                    <span>Histórico</span>
                     {hasTasks && (
                         <span className={styles.buttonContainer}>
-              <DefaultButton
-                  icon={<TrashIcon />}
-                  color='red'
-                  aria-label='Apagar todo o histórico'
-                  title='Apagar histórico'
-                  onClick={handleResetHistory}
-              />
-            </span>
+                            <DefaultButton
+                                icon={<TrashIcon />}
+                                color='red'
+                                aria-label='Apagar todo o histórico'
+                                title='Apagar histórico'
+                                onClick={handleResetHistory}
+                            />
+                        </span>
                     )}
                 </Heading>
             </Container>
-
             <Container>
                 {isLoading && <p style={{ textAlign: 'center' }}>Carregando...</p>}
                 {!isLoading && hasTasks && (
@@ -105,9 +111,9 @@ export function History() {
                         <table>
                             <thead>
                             <tr>
-                                <th onClick={() => handleSortTasks({ field: 'name' })} className={styles.thSort}>Tarefa ↕</th>
-                                <th onClick={() => handleSortTasks({ field: 'duration' })} className={styles.thSort}>Duração ↕</th>
-                                <th onClick={() => handleSortTasks({ field: 'startDate' })} className={styles.thSort}>Data ↕</th>
+                                <th onClick={() => handleSortTasks({ field: 'name' })} className={styles.thSort}>Tarefa</th>
+                                <th onClick={() => handleSortTasks({ field: 'duration' })} className={styles.thSort}>Duração</th>
+                                <th onClick={() => handleSortTasks({ field: 'startDate' })} className={styles.thSort}>Data</th>
                                 <th>Status</th>
                                 <th>Tipo</th>
                             </tr>

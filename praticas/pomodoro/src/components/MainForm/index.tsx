@@ -12,6 +12,14 @@ import { Tips } from '../Tips';
 import { showMessage } from '../../adapters/showMessage';
 import { API_URL } from '../../config/api';
 
+function getAuthHeaders() {
+  const token = localStorage.getItem('pomodoro_token')
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+}
+
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
@@ -43,7 +51,7 @@ export function MainForm() {
     try {
       await fetch(`${API_URL}/tasks`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         body: JSON.stringify({
           id: newTask.id,
           name: newTask.name,
@@ -53,7 +61,7 @@ export function MainForm() {
         }),
       });
     } catch {
-      console.warn('Erro ao registrar task na API');
+      console.warn('Erro ao registrar tarefa na API');
     }
 
     dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
@@ -68,7 +76,7 @@ export function MainForm() {
       try {
         await fetch(`${API_URL}/tasks/${state.activeTask.id}/interrupt`, {
           method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
+          headers: getAuthHeaders(),
           body: JSON.stringify({ interruptDate: Date.now() }),
         });
       } catch {
@@ -83,7 +91,7 @@ export function MainForm() {
       <form onSubmit={handleCreateNewTask} className='form' action=''>
         <div className='formRow'>
           <DefaultInput
-              labelText='task'
+              labelText='tarefa'
               id='meuInput'
               type='text'
               placeholder='Digite algo'

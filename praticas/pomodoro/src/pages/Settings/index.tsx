@@ -10,6 +10,14 @@ import { showMessage } from '../../adapters/showMessage';
 import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
 import { API_URL } from '../../config/api';
 
+function getAuthHeaders() {
+  const token = localStorage.getItem('pomodoro_token')
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+}
+
 export function Settings() {
   const { state, dispatch } = useTaskContext();
   const workTimeInput = useRef<HTMLInputElement>(null);
@@ -18,9 +26,9 @@ export function Settings() {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    document.title = 'Configurações - Chronos Pomodoro';
+    document.title = 'Configuracoes - Chronos Pomodoro';
 
-    fetch(`${API_URL}/settings`)
+    fetch(`${API_URL}/settings`, { headers: getAuthHeaders() })
         .then(res => res.json())
         .then(data => {
           dispatch({
@@ -32,7 +40,7 @@ export function Settings() {
             },
           });
         })
-        .catch(() => showMessage.error('Erro ao carregar configurações'));
+        .catch(() => showMessage.error('Erro ao carregar configuracoes'));
   }, []);
 
   async function handleSaveSettings(e: React.FormEvent<HTMLFormElement>) {
@@ -46,7 +54,7 @@ export function Settings() {
     const longBreakTime = Number(longBreakTimeInput.current?.value);
 
     if (isNaN(workTime) || isNaN(shortBreakTime) || isNaN(longBreakTime)) {
-      formErrors.push('Digite apenas números para TODOS os campos');
+      formErrors.push('Digite apenas numeros para TODOS os campos');
     }
     if (workTime < 1 || workTime > 99) {
       formErrors.push('Digite valores entre 1 e 99 para foco');
@@ -66,7 +74,7 @@ export function Settings() {
       setIsSaving(true);
       const res = await fetch(`${API_URL}/settings`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ workTime, shortBreakTime, longBreakTime }),
       });
 
@@ -108,7 +116,7 @@ export function Settings() {
             <div className='formRow'>
               <DefaultButton
                   icon={<SaveIcon />}
-                  aria-label='Salvar configurações'
+                  aria-label='Salvar configuracoes'
                   title={isSaving ? 'Salvando...' : 'Salvar configurações'}
                   disabled={isSaving}
               />
